@@ -233,47 +233,4 @@ class TaskMasterController extends Controller
             'result'   => $collection
         ]);
     }
-
-    public function getPertanyaan(Request $request)
-    {
-      // $tasks = TaskMaster::all();
-      $task_master_id = $request->id;
-      $tasks = TaskMaster::where('id', $task_master_id)
-                             ->where('class', $request->class)
-                             ->first()->tasks()->get();
-
-      return response()->json([
-           'error' => false,
-           'status' => 'success',
-           'result' => $tasks
-      ]);
-    }
-
-    public function getPilihan(Request $request)
-    {
-      $task_master_id = $request->id;
-      $answers = Answer::where('task_id', $request->task_id)
-                        ->get();
-
-      // $answers = [];
-      // dd($tasks);
-      // foreach ($answers as $key => $curr_task) {
-      //     $answers[$key] = $curr_task->answers()->orderBy('choice', 'asc')->get();
-      // }
-      // // dd($answers);
-      // $choices = ['a', 'b', 'c', 'd'];
-
-
-      // $answers = Task::leftJoin('answers', 'tasks.id', 'answers.task_id')
-      //                       // ->where('task_masters.id', $task_master_id)
-      //                       // ->where('task_masters.class', $request->class)
-      //                       ->where('tasks.id', $request->taskmaster_id)
-      //                       ->get();
-
-      return response()->json([
-           'error' => false,
-           'status' => 'success',
-           'result' => $answers
-      ]);
-    }
 }

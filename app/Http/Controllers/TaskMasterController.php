@@ -193,24 +193,44 @@ class TaskMasterController extends Controller
                                    // ->where('semester', $request->semester)
                                    ->first()->taskanswers()->get(); //answers karena di function model diberi nama answers
         }
-        // else{
-        //     return redirect()->back()->with('error','Maaf, Soal tidak tersedia.');
-        // }
-        $answers = [];
-        // dd($tasks);
-        foreach ($tasks as $key => $curr_task) {
-            $answers[$key] = $curr_task->answers()->orderBy('choice', 'asc')->get();
+        else {
+          return response()->json([
+              'error'  => true,
+              'status' => 'error',
+              'message'   => 'not found task'
+          ]);
         }
-        // dd($answers);
-        $choices = ['a', 'b', 'c', 'd'];
-        // $taskmaster_id = $id;
-       $taskmaster_id = $task_master_id;
-        // dd($taskmaster_id);
+        $soal  = [];
+        foreach ($tasks as $key => $item) {
+            $soal[$key] = $item
+                          ->first();
+        }
+        $pilgan  = [];
+        foreach ($tasks as $key => $item) {
+            $pilgan[$key] = $item
+                          ->answers()
+                          ->orderBy('choice', 'asc')
+                          ->get();
+        }
+
+        $collection = [];
+        foreach ($tasks as $i => $taskss) {
+          $collection[$i] = [
+            'id' => $taskss['id'],
+            'description' => $taskss['description'],
+            'A' => $pilgan[$i]->get(0)->choice_answer,
+            'B' => $pilgan[$i]->get(1)->choice_answer,
+            'C' => $pilgan[$i]->get(2)->choice_answer,
+            'D' => $pilgan[$i]->get(3)->choice_answer,
+            'Answer' => $pilgan[$i]->where('is_answer', 1)->first()->choice_answer,
+            'discussion' => $taskss['discussion'],
+          ];
+        }
 
         return response()->json([
             'error'  => false,
             'status' => 'success',
-            'result'   => $tasks
+            'result'   => $collection
         ]);
     }
 

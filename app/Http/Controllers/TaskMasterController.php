@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\TaskMaster;
 use App\SubjectsCategory;
+use App\StudentTask;
 use App\LogActivity;
 use App\Answer;
 use App\Task;
@@ -236,9 +237,26 @@ class TaskMasterController extends Controller
 
     public function api_nilai(Request $request)
     {
+      /*ARDIA START*/
       //hai layndo
       //ini disini api buat kirim nilai latihan siswa ke db (tabel student_tasks)
       //parameternya user_id siswa + id task nya
       //tapi kolom true_answer + wrong anwernya gak diisi. jadi cuma ngisi student_id, taskmaster_id, sama score
+      /*ARDIA END*?
+
+      /*LAYNDO START*/
+      //siappp
+
+      $data = StudentTask::create([
+        'student_id' => Auth::user()->student->id,
+        'taskmaster_id' => request('taskmaster_id'),
+        'score' => request('score'),
+      ]);
+      return response()->json([
+        'status' => 'success',
+        'result'   => $data
+      ]);
+
+      /*LAYNDO END*/
     }
 }

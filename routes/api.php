@@ -119,3 +119,6 @@ Route::middleware('auth:api')->get('/banksoal/pilihan','TaskMasterController@get
 Route::middleware('auth:api')->post('/log/ebook','EbookController@api_LogEbook');
 Route::middleware('auth:api')->post('/log/games','GamesController@api_LogGames');
 Route::middleware('auth:api')->post('/log/task','TaskMasterController@api_LogTask');
+
+/*DARI LAYNDO*/
+Route::middleware('auth:api')->get('/siswa/nggarap','TaskMasterController@api_nilai');

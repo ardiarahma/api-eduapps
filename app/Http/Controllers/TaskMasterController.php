@@ -233,4 +233,12 @@ class TaskMasterController extends Controller
             'result'   => $collection
         ]);
     }
+
+    public function api_nilai(Request $request)
+    {
+      //hai layndo
+      //ini disini api buat kirim nilai latihan siswa ke db (tabel student_tasks)
+      //parameternya user_id siswa + id task nya
+      //tapi kolom true_answer + wrong anwernya gak diisi. jadi cuma ngisi student_id, taskmaster_id, sama score
+    }
 }

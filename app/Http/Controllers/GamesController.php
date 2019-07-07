@@ -17,7 +17,13 @@ class GamesController extends Controller
             'fitur'   => 'Mini Games'
         ]);
 
-        $games = Game::all(); // untuk mengambil semua data games
+        $games = Game::where('gamecategories_id', $request->gamecategories)
+                      ->get(); // untuk mengambil semua data games
+
+        foreach ($games as $key => $value){
+        		$value->image = asset('images/'.$value->image.'');
+        }
+        
         return response()->json([
             'error' => false,
             'status' => 'success',

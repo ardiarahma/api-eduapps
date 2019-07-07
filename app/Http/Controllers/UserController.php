@@ -29,8 +29,8 @@ class UserController extends Controller
     public function regisortu(Request $request){
         $this->validate($request, [
                  'name'          => 'required',
-                 'username'      => 'required',
-                 'email'         => 'required',
+                 'username'      => 'required|string|unique:users',
+                 'email'         => 'required|string|email|unique:users',
                  'password'      => 'required',
 
            ],
@@ -38,7 +38,9 @@ class UserController extends Controller
            [
                 'name.required'     => 'Nama harus diisi!',
                 'username.required'   => 'Username harus diisi!',
+                'username.unique'        => 'Username telah terdaftar!',
                 'email.required'      => 'Email harus diisi!',
+                'email.unique'           => 'Email telah terdaftar!',
                 'password.required'   => 'Password harus diisi!',
             ]
 
@@ -63,8 +65,8 @@ class UserController extends Controller
         $this->validate($request, [
                  'name'          => 'required',
                  'jenis_kelamin' => 'required',
-                 'username'      => 'required',
-                 'email'         => 'required',
+                 'username'      => 'required|unique:users',
+                 'email'         => 'required|unique:users',
                  'password'      => 'required',
                  'orangtua_id'   => 'required',
                  'province_id'   => 'required',
@@ -84,8 +86,10 @@ class UserController extends Controller
                 'province_id.required'   => 'Provinsi harus diisi!',
                 'regency_id.required'    => 'Kota/kabupaten harus diisi!',
                 'district_id.required'   => 'Kecamatan harus diisi!',
-                'school_name.required'   => 'Sekolah harus diisi!quired',
+                'school_name.required'   => 'Sekolah harus diisi!',
                 'class.required'         => 'Kelas harus diisi!',
+                'email.unique'           => 'Email telah terdaftar!',
+                'username.unique'        => 'Username telah terdaftar!',
             ]
 
        );
@@ -145,9 +149,9 @@ class UserController extends Controller
           ]);
       }
       else{
-          $success['status'] = 'failed';
+          $success['status'] = 'Kesalahan terjadi. Silakan coba lagi.';
           $success['error'] = 'Unauthorised';
-          $success['message'] = 'Your username or password incorrect!';
+          $success['message'] = 'Username atau password anda salah!';
           return response()->json($success,401);
       }
   }
